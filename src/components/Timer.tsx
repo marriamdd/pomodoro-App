@@ -1,8 +1,15 @@
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import styled from "styled-components";
+import { useContext } from "react";
+import { TimerContext } from "../App";
 export default function Timer() {
+  const { setShowSettings, showSettings } = useContext(TimerContext);
   const options = ["pomodoro ", "short break ", "long break"];
+  console.log(showSettings);
+  const handleSettingsClick = () => {
+    setShowSettings(!showSettings);
+  };
   return (
     <MainCard>
       <div className="pomodoroDiv">
@@ -31,7 +38,7 @@ export default function Timer() {
         <h2>PAUSE</h2>;
       </div>
       <div className="buttonDiv">
-        <button>
+        <button onClick={handleSettingsClick}>
           <img src="/assets/icon-settings.svg" alt="" />
         </button>
       </div>
@@ -44,10 +51,10 @@ const MainCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-
+  position: relative;
   /* justify-content: space-around; */
   .pomodoroDiv {
-    padding: 40px;
+    padding: 35px;
     color: #d7e0ff;
     text-align: center;
     font-size: 24px;
@@ -66,7 +73,7 @@ const MainCard = styled.div`
       height: 48px;
       border-radius: 26.5px;
       background: #d881f8;
-
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -88,7 +95,7 @@ const MainCard = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    & > h3 {
+    & > h2 {
       position: absolute;
       bottom: 9rem;
       color: #d7e0ff;
@@ -102,9 +109,9 @@ const MainCard = styled.div`
   }
   .buttonDiv {
     button {
+      cursor: pointer;
       background-color: transparent;
       border: none;
-      cursor: pointer;
     }
   }
 `;
