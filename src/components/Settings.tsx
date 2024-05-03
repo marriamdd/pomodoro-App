@@ -1,13 +1,20 @@
 import styled from "styled-components";
+import { useContext } from "react";
 import { TimeInputDiv } from "../styledComponent/timeInput";
 import { FontChoice } from "../styledComponent/fontChoice";
 import { ColorContainer } from "../styledComponent/colorContainer";
+import { TimerContext } from "../App";
 export default function Settings() {
+  const { setShowSettings, showSettings } = useContext(TimerContext);
   return (
     <SettingsContainer>
       <div className="SettingTitle">
         <h2>Settings</h2>
-        <span>
+        <span
+          onClick={() => {
+            setShowSettings(!showSettings);
+          }}
+        >
           <img src="/assets/icon-close.svg" alt="" />
         </span>
       </div>
