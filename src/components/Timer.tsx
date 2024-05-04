@@ -4,12 +4,26 @@ import styled from "styled-components";
 import { useContext } from "react";
 import { TimerContext } from "../App";
 export default function Timer() {
-  const { setShowSettings, showSettings } = useContext(TimerContext);
-  const options = ["pomodoro ", "short break ", "long break"];
+  const {
+    setShowSettings,
+    showSettings,
+    setLongBreak,
+    setPause,
+    setPomodoro,
+    setShortBreak,
+    shortBreak,
+    longBreak,
+    pomodoro,
+    pause,
+    category,
+    setCategory,
+  } = useContext(TimerContext);
+  const options = ["pomodoro", "short break", "long break"];
   console.log(showSettings);
   const handleSettingsClick = () => {
     setShowSettings(!showSettings);
   };
+  console.log(shortBreak);
   return (
     <MainCard>
       <div className="pomodoroDiv">
@@ -17,7 +31,12 @@ export default function Timer() {
       </div>
       <div className="optionsContainer">
         {options.map((item) => (
-          <div>
+          <div
+            key={Math.random()}
+            onClick={() => {
+              setCategory(`${item}`);
+            }}
+          >
             <span>{item}</span>
           </div>
         ))}
@@ -26,7 +45,15 @@ export default function Timer() {
         <div style={{ width: "300px", height: "300px" }}>
           <CircularProgressbar
             value={60}
-            text={`${60}%`}
+            text={
+              category === "pomodoro"
+                ? `${pomodoro}`
+                : category === "long break"
+                ? `${longBreak}`
+                : category === "short break"
+                ? `${shortBreak}`
+                : `${pomodoro}`
+            }
             styles={buildStyles({
               textColor: `#D7E0FF`,
               textSize: "35px",
@@ -68,8 +95,9 @@ const MainCard = styled.div`
     background: #161932;
     align-items: center;
     justify-content: center;
+    gap: 0.5rem;
     & > div {
-      width: 105.201px;
+      width: 103px;
       height: 48px;
       border-radius: 26.5px;
       background: #d881f8;

@@ -5,7 +5,21 @@ import { FontChoice } from "../styledComponent/fontChoice";
 import { ColorContainer } from "../styledComponent/colorContainer";
 import { TimerContext } from "../App";
 export default function Settings() {
-  const { setShowSettings, showSettings } = useContext(TimerContext);
+  const {
+    setShowSettings,
+    showSettings,
+    setLongBreak,
+    setPause,
+    setPomodoro,
+    setShortBreak,
+    shortBreak,
+    longBreak,
+    pomodoro,
+    pause,
+    category,
+    setCategory,
+  } = useContext(TimerContext);
+  console.log(pomodoro);
   return (
     <SettingsContainer>
       <div className="SettingTitle">
@@ -22,15 +36,39 @@ export default function Settings() {
       <div style={{ borderBottom: "1px solid #E3E1E1 ", padding: "1rem" }}>
         <TimeInputDiv>
           <span>pomodoro</span>
-          <input type="number" min="0" />
+          <input
+            type="number"
+            min="0"
+            max="60"
+            value={pomodoro}
+            onChange={(e) => {
+              setPomodoro(+e.target.value);
+            }}
+          />
         </TimeInputDiv>
         <TimeInputDiv>
           <span>short break</span>
-          <input type="number" />
+          <input
+            type="number"
+            min="0"
+            max="60"
+            value={shortBreak}
+            onChange={(e) => {
+              setShortBreak(+e.target.value);
+            }}
+          />
         </TimeInputDiv>
         <TimeInputDiv>
           <span>long break</span>
-          <input type="number" />
+          <input
+            type="number"
+            min="0"
+            max="60"
+            value={longBreak}
+            onChange={(e) => {
+              setLongBreak(+e.target.value);
+            }}
+          />
         </TimeInputDiv>
       </div>
       <h2>FONT</h2>

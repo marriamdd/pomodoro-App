@@ -16,6 +16,7 @@ export const TimeInputDiv = styled.div`
     opacity: 0.4;
   }
   input {
+    padding-left: 1rem;
     width: 140px;
     height: 40px;
     border-radius: 10px;
