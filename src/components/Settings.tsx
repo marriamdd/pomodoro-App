@@ -12,14 +12,17 @@ export default function Settings() {
     setPause,
     setPomodoro,
     setShortBreak,
-    shortBreak,
-    longBreak,
+    shortbreak,
+    longbreak,
     pomodoro,
     pause,
     category,
     setCategory,
+    colorsArray,
+    color,
+    setColor,
   } = useContext(TimerContext);
-  console.log(pomodoro);
+  console.log("color", color);
   return (
     <SettingsContainer>
       <div className="SettingTitle">
@@ -52,7 +55,7 @@ export default function Settings() {
             type="number"
             min="0"
             max="60"
-            value={shortBreak}
+            value={shortbreak}
             onChange={(e) => {
               setShortBreak(+e.target.value);
             }}
@@ -64,7 +67,7 @@ export default function Settings() {
             type="number"
             min="0"
             max="60"
-            value={longBreak}
+            value={longbreak}
             onChange={(e) => {
               setLongBreak(+e.target.value);
             }}
@@ -85,12 +88,25 @@ export default function Settings() {
       </FontChoice>
       <h2>COLOR</h2>
       <ColorContainer>
-        <div style={{ background: "#F87070" }}></div>
-        <div style={{ background: "#70F3F8" }}></div>
-        <div style={{ background: "#D881F8" }}></div>
+        {colorsArray.map((itemColor) => (
+          <div
+            key={Math.random()}
+            onClick={() => setColor(itemColor)}
+            style={{ background: itemColor }}
+            className={itemColor === color ? "activeColor" : ""}
+          >
+            <img src="/assets/icon.svg" alt="" />
+          </div>
+        ))}
       </ColorContainer>
       <div className="buttonDiv">
-        <button>Apply</button>
+        <button
+          onClick={() => {
+            setShowSettings(!showSettings);
+          }}
+        >
+          Apply
+        </button>
       </div>
     </SettingsContainer>
   );
@@ -118,6 +134,9 @@ const SettingsContainer = styled.div`
       font-size: 16px;
       border: none;
       font-weight: 700;
+    }
+    & > button:hover {
+      opacity: 0.2031;
     }
   }
 

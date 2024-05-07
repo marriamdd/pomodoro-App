@@ -11,5 +11,16 @@ export const ColorContainer = styled.div`
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      display: none;
+    }
+  }
+  .activeColor {
+    img {
+      display: flex;
+    }
   }
 `;

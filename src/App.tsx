@@ -1,43 +1,62 @@
 import Settings from "./components/Settings";
 import Timer from "./components/Timer";
 import styled from "styled-components";
-import { useState, createContext } from "react";
+import { useState, createContext, useRef } from "react";
 interface TimerContextType {
   showSettings: boolean;
   setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
   pomodoro: number;
   setPomodoro: React.Dispatch<React.SetStateAction<number>>;
-  shortBreak: number;
+  shortbreak: number;
   setShortBreak: React.Dispatch<React.SetStateAction<number>>;
-  longBreak: number;
+  longbreak: number;
   setLongBreak: React.Dispatch<React.SetStateAction<number>>;
   pause: boolean;
   setPause: React.Dispatch<React.SetStateAction<boolean>>;
   category: string;
   setCategory: React.Dispatch<React.SetStateAction<string>>;
+  secondsLeft: number;
+  setSecondsLeft: React.Dispatch<React.SetStateAction<number>>;
+  secondRef: React.MutableRefObject<number>;
+  colorsArray: string[];
+  color: string;
+  setColor: React.Dispatch<React.SetStateAction<string>>;
 }
 export const TimerContext = createContext<TimerContextType>({
   showSettings: false,
   setShowSettings: () => {},
   pomodoro: 4,
   setPomodoro: () => {},
-  shortBreak: 2,
+  shortbreak: 2,
   setShortBreak: () => {},
-  longBreak: 5,
+  longbreak: 5,
   setLongBreak: () => {},
-  pause: true,
+  pause: false,
   setPause: () => {},
   setCategory: () => {},
   category: "pomodoro",
+  secondsLeft: 60,
+  setSecondsLeft: () => {},
+  secondRef: { current: 60 },
+  colorsArray: [""],
+  color: "",
+  setColor: () => {},
 });
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [pomodoro, setPomodoro] = useState(5);
-  const [shortBreak, setShortBreak] = useState(2);
-  const [longBreak, setLongBreak] = useState(3);
-  const [pause, setPause] = useState(true);
+  const [shortbreak, setShortBreak] = useState(2);
+  const [longbreak, setLongBreak] = useState(3);
+  const [pause, setPause] = useState(false);
   const [category, setCategory] = useState("pomodoro");
+  const [secondsLeft, setSecondsLeft] = useState(0);
+  let secondRef = useRef(secondsLeft);
+  const peachColor = "#F87070";
+  const lightBlue = "#70F3F8";
+  const purple = "#D881F8";
+  const colorsArray = [peachColor, lightBlue, purple];
+  const [color, setColor] = useState(peachColor);
   return (
     <>
       <TimerContext.Provider
@@ -46,14 +65,20 @@ function App() {
           setShowSettings,
           pomodoro,
           setPomodoro,
-          shortBreak,
+          shortbreak,
           setShortBreak,
-          longBreak,
+          longbreak,
           setLongBreak,
           pause,
           setPause,
           category,
           setCategory,
+          secondsLeft,
+          setSecondsLeft,
+          secondRef,
+          colorsArray,
+          color,
+          setColor,
         }}
       >
         <Timer />
