@@ -28,6 +28,7 @@ export default function Timer() {
     setSecondsLeft,
     secondRef,
     color,
+    font,
   } = useContext(TimerContext);
   const options = ["pomodoro", "short break", "long break"];
 
@@ -35,7 +36,7 @@ export default function Timer() {
   return (
     <MainCard color={color}>
       <div className="pomodoroDiv">
-        <h3>pomodoro</h3>
+        <h2 className="appTitle">pomodoro</h2>
       </div>
       <div className="optionsContainer">
         {options.map((item, index) => (
@@ -83,9 +84,11 @@ export default function Timer() {
         <h2>PAUSE</h2>;
       </div>
       <div className="buttonDiv">
-        <button onClick={handleSettingsClick}>
-          <img src="/assets/icon-settings.svg" alt="" />
-        </button>
+        {showSettings || (
+          <button onClick={handleSettingsClick}>
+            <img src="/assets/icon-settings.svg" alt="" />
+          </button>
+        )}
       </div>
     </MainCard>
   );
@@ -99,6 +102,7 @@ const MainCard = styled.div<{ color: string }>`
   position: relative;
   .active {
     background-color: ${(props) => props.color};
+    color: #1e213f;
   }
   .pomodoroDiv {
     padding: 35px;
@@ -116,11 +120,17 @@ const MainCard = styled.div<{ color: string }>`
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    font-weight: 700;
+    color: #d7e0ff;
+
+    @media screen and (min-width: 768px) {
+      font-size: 14px;
+    }
     & > div {
       width: 103px;
       height: 48px;
       border-radius: 26.5px;
-      /* background: #d881f8; */
+
       cursor: pointer;
       display: flex;
       align-items: center;
@@ -155,7 +165,13 @@ const MainCard = styled.div<{ color: string }>`
       letter-spacing: 13.125px;
     }
   }
-
+  .appTitle {
+    font-size: 24px;
+    font-weight: 700;
+    @media screen and (min-width: 768px) {
+      font-size: 32px;
+    }
+  }
   .buttonDiv {
     button {
       cursor: pointer;

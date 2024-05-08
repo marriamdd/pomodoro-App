@@ -6,17 +6,20 @@ export const TimeInputDiv = styled.div`
   padding: 1rem;
   align-items: center;
 
-  & > h2 {
-    color: #1e213f;
-
+  @media screen and (min-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: start;
+  }
+  & > span {
     font-size: 12px;
-
     font-weight: 700;
-
     opacity: 0.4;
+    color: #1e213f;
   }
   input {
-    padding-left: 1rem;
+    box-sizing: border-box;
+    padding: 1.5rem;
     width: 140px;
     height: 40px;
     border-radius: 10px;

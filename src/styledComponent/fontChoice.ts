@@ -1,23 +1,49 @@
 import styled from "styled-components";
 
-export const FontChoice = styled.div`
-  padding-block: 3rem;
+export const FontSection = styled.section`
   display: flex;
-  width: 100%;
+  flex-direction: column;
+
   align-items: center;
-  justify-content: center;
   gap: 2rem;
-  border-bottom: 1px solid #e3e1e1;
-  div {
-    width: 40px;
-    height: 40px;
-    font-weight: 700;
-    font-size: 15px;
-    background-color: #eff1fa;
-    color: #1e213f;
-    border-radius: 50%;
+
+  @media screen and (min-width: 768px) {
+    flex-direction: row;
+
+    justify-content: center;
+    align-items: center;
+    margin: 3rem 1rem 1rem;
+    padding-inline: 4rem;
+    h2 {
+      padding: 0;
+      padding-bottom: 3rem;
+    }
+  }
+  .fontsDivsContainer {
+    padding-bottom: 3rem;
     display: flex;
+    width: 100%;
     align-items: center;
     justify-content: center;
+    gap: 2rem;
+    .activeFont {
+      background-color: #1e213f;
+      color: white;
+    }
+    @media screen and (min-width: 768px) {
+      justify-content: end;
+    }
+    div {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      font-size: 15px;
+      background-color: #eff1fa;
+      color: #1e213f;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 `;

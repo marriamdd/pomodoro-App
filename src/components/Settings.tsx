@@ -1,9 +1,10 @@
 import styled from "styled-components";
 import { useContext } from "react";
 import { TimeInputDiv } from "../styledComponent/timeInput";
-import { FontChoice } from "../styledComponent/fontChoice";
-import { ColorContainer } from "../styledComponent/colorContainer";
+import { FontSection } from "../styledComponent/fontChoice";
+import { ColorSection } from "../styledComponent/colorContainer";
 import { TimerContext } from "../App";
+import { SectionTitle } from "../styledComponent/SectionTitles";
 export default function Settings() {
   const {
     setShowSettings,
@@ -22,12 +23,15 @@ export default function Settings() {
     color,
     setColor,
     fontsArray,
+    setFont,
+    font,
   } = useContext(TimerContext);
   console.log("color", color);
   return (
     <SettingsContainer>
       <div className="SettingTitle">
         <h2>Settings</h2>
+
         <span
           onClick={() => {
             setShowSettings(!showSettings);
@@ -36,8 +40,8 @@ export default function Settings() {
           <img src="/assets/icon-close.svg" alt="" />
         </span>
       </div>
-      <h2>TIME (MINSTES)</h2>
-      <div style={{ borderBottom: "1px solid #E3E1E1 ", padding: "1rem" }}>
+      <SectionTitle>TIME (MINSTES)</SectionTitle>
+      <TimeInputsContainer>
         <TimeInputDiv>
           <span>pomodoro</span>
           <input
@@ -50,6 +54,7 @@ export default function Settings() {
             }}
           />
         </TimeInputDiv>
+
         <TimeInputDiv>
           <span>short break</span>
           <input
@@ -74,35 +79,45 @@ export default function Settings() {
             }}
           />
         </TimeInputDiv>
-      </div>
-      <h2>FONT</h2>
-      <FontChoice>
-        {fontsArray.map((font, index) => (
-          <div key={Math.random()}>
-            <span
-              style={{
-                fontFamily: font,
-                fontWeight: index == 1 ? "400" : "700",
-              }}
+      </TimeInputsContainer>
+      <Line></Line>
+      <FontSection>
+        <SectionTitle>FONT</SectionTitle>
+        <div className="fontsDivsContainer">
+          {fontsArray.map((fontFam, index) => (
+            <div
+              onClick={() => setFont(fontFam)}
+              className={fontFam == font ? "activeFont" : ""}
+              key={Math.random()}
             >
-              Aa
-            </span>
-          </div>
-        ))}
-      </FontChoice>
-      <h2>COLOR</h2>
-      <ColorContainer>
-        {colorsArray.map((itemColor) => (
-          <div
-            key={Math.random()}
-            onClick={() => setColor(itemColor)}
-            style={{ background: itemColor }}
-            className={itemColor === color ? "activeColor" : ""}
-          >
-            <img src="/assets/icon.svg" alt="" />
-          </div>
-        ))}
-      </ColorContainer>
+              <span
+                style={{
+                  fontFamily: fontFam,
+                  fontWeight: index == 1 ? "400" : "700",
+                }}
+              >
+                Aa
+              </span>
+            </div>
+          ))}
+        </div>
+      </FontSection>
+      <Line></Line>
+      <ColorSection>
+        <SectionTitle>COLOR</SectionTitle>
+        <div className="colorsDivsContainer">
+          {colorsArray.map((itemColor) => (
+            <div
+              key={Math.random()}
+              onClick={() => setColor(itemColor)}
+              style={{ background: itemColor }}
+              className={itemColor === color ? "activeColor" : ""}
+            >
+              <img src="/assets/icon.svg" alt="" />
+            </div>
+          ))}
+        </div>
+      </ColorSection>
       <div className="buttonDiv">
         <button
           onClick={() => {
@@ -118,15 +133,27 @@ export default function Settings() {
 const SettingsContainer = styled.div`
   position: absolute;
   top: 5.5rem;
-  width: 327px;
-  height: 549px;
+  width: 32.7rem;
+  height: 56rem;
   border-radius: 15px;
   background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media screen and (min-width: 768px) {
+    top: 6rem;
+    width: 54rem;
+    height: 55rem;
+    margin-inline: -6rem;
+  }
   .buttonDiv {
     position: relative;
+    width: 100%;
+
     & > button {
       position: absolute;
-
+      top: -1rem;
       right: 9rem;
       width: 140px;
       height: 53px;
@@ -138,32 +165,42 @@ const SettingsContainer = styled.div`
       font-size: 16px;
       border: none;
       font-weight: 700;
+      @media screen and (min-width: 768px) {
+        left: 19rem;
+        top: 3rem;
+      }
     }
     & > button:hover {
       opacity: 0.9;
     }
   }
 
-  & > h2 {
-    color: #161932;
-    text-align: center;
-    padding-top: 1.5rem;
-    font-size: 11px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-    letter-spacing: 4.231px;
-  }
   .SettingTitle {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 2rem;
-    border-bottom: 2px solid #e3e1e1;
+    border-bottom: 1.5px solid #e3e1e1;
     h2 {
       color: #161932;
-      font-size: 20px;
+      font-size: 2rem;
       font-weight: 700;
+      @media screen and (min-width: 768px) {
+        font-size: 2.8rem;
+      }
     }
+  }
+`;
+const Line = styled.div`
+  width: 90%;
+  height: 1px;
+  background: #e3e1e1;
+  align-self: center;
+`;
+const TimeInputsContainer = styled.div`
+  padding: 1rem;
+  margin: 2.5rem 1rem 1rem;
+  @media screen and (min-width: 768px) {
+    display: flex;
   }
 `;

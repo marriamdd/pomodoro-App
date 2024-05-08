@@ -1,7 +1,10 @@
 import { useContext, useEffect, useRef } from "react";
 import { TimerContext } from "../App";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { StyledCircularProgressbar } from "../styledComponent/CircularPRogressbar";
+import {
+  StyledCircularDiv,
+  StyledCircularProgressbar,
+} from "../styledComponent/CircularPRogressbar";
 
 export default function PomodoroComponent() {
   const {
@@ -21,6 +24,7 @@ export default function PomodoroComponent() {
     setSecondsLeft,
     secondRef,
     color,
+    font,
   } = useContext(TimerContext);
 
   let pomoRef = useRef(pomodoro);
@@ -57,12 +61,15 @@ export default function PomodoroComponent() {
   const minutes = Math.floor(secondsLeft / 60);
   let seconds = secondsLeft % 60;
   const secondsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;
+  let customStyle = {
+    text: {
+      fontFamily: font,
+    },
+  };
+  console.log("font now", font);
   return (
     <div>
-      <div
-        onClick={() => setPause(!pause)}
-        style={{ width: "320px", height: "300px" }}
-      >
+      <StyledCircularDiv onClick={() => setPause(!pause)}>
         <StyledCircularProgressbar
           value={percentage}
           text={minutes + ":" + secondsDisplay}
@@ -75,9 +82,10 @@ export default function PomodoroComponent() {
             trailColor: "#161932",
             pathColor: color,
             backgroundColor: "#161932",
+            ...customStyle,
           })}
         />
-      </div>
+      </StyledCircularDiv>
     </div>
   );
 }
