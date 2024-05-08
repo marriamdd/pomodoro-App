@@ -21,6 +21,7 @@ interface TimerContextType {
   colorsArray: string[];
   color: string;
   setColor: React.Dispatch<React.SetStateAction<string>>;
+  fontsArray: string[];
 }
 export const TimerContext = createContext<TimerContextType>({
   showSettings: false,
@@ -41,6 +42,7 @@ export const TimerContext = createContext<TimerContextType>({
   colorsArray: [""],
   color: "",
   setColor: () => {},
+  fontsArray: ["Kumbh Sans"],
 });
 
 function App() {
@@ -57,6 +59,8 @@ function App() {
   const purple = "#D881F8";
   const colorsArray = [peachColor, lightBlue, purple];
   const [color, setColor] = useState(peachColor);
+  const [font, setFont] = useState("Kumbh Sans");
+  const fontsArray = ["Kumbh Sans", "Roboto Slab", "Space Mono"];
   return (
     <>
       <TimerContext.Provider
@@ -79,6 +83,7 @@ function App() {
           colorsArray,
           color,
           setColor,
+          fontsArray,
         }}
       >
         <Timer />

@@ -18,6 +18,10 @@ export const ColorContainer = styled.div`
       display: none;
     }
   }
+  div:hover {
+    width: 43px;
+    height: 43px;
+  }
   .activeColor {
     img {
       display: flex;

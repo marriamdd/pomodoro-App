@@ -21,6 +21,7 @@ export default function Settings() {
     colorsArray,
     color,
     setColor,
+    fontsArray,
   } = useContext(TimerContext);
   console.log("color", color);
   return (
@@ -76,15 +77,18 @@ export default function Settings() {
       </div>
       <h2>FONT</h2>
       <FontChoice>
-        <div style={{ fontFamily: "Kumbh Sans" }}>
-          <span>Aa</span>
-        </div>
-        <div style={{ fontFamily: "Roboto Slab" }}>
-          <span>Aa</span>
-        </div>
-        <div style={{ fontFamily: "Space Mono" }}>
-          <span>Aa</span>
-        </div>
+        {fontsArray.map((font, index) => (
+          <div key={Math.random()}>
+            <span
+              style={{
+                fontFamily: font,
+                fontWeight: index == 1 ? "400" : "700",
+              }}
+            >
+              Aa
+            </span>
+          </div>
+        ))}
       </FontChoice>
       <h2>COLOR</h2>
       <ColorContainer>
@@ -136,7 +140,7 @@ const SettingsContainer = styled.div`
       font-weight: 700;
     }
     & > button:hover {
-      opacity: 0.2031;
+      opacity: 0.9;
     }
   }
 
