@@ -32,6 +32,8 @@ export default function PomodoroComponent() {
 
   let initTimer = () => {
     setSecondsLeft(pomodoro * 60);
+    const nextSeconds = pomodoro * 60;
+    secondRef.current = nextSeconds;
   };
 
   const tick = () => {
@@ -40,15 +42,19 @@ export default function PomodoroComponent() {
   };
 
   useEffect(() => {
-    const nextSeconds = pomodoro * 60;
-    secondRef.current = nextSeconds;
+    initTimer();
+  }, []);
+
+  useEffect(() => {
+    // const nextSeconds = pomodoro * 60;
+    // secondRef.current = nextSeconds;
 
     const interval = setInterval(() => {
       if (pause) {
         return;
       }
 
-      initTimer();
+      // initTimer();
       tick();
     }, 1000);
 
@@ -57,7 +63,6 @@ export default function PomodoroComponent() {
 
   const totalSeconds = pomodoro * 60;
   const percentage = Math.round((secondsLeft / totalSeconds) * 100);
-
   const minutes = Math.floor(secondsLeft / 60);
   let seconds = secondsLeft % 60;
   const secondsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;

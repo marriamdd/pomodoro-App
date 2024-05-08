@@ -181,6 +181,9 @@ const SettingsContainer = styled.div`
     justify-content: space-between;
     padding: 2rem;
     border-bottom: 1.5px solid #e3e1e1;
+    @media screen and (min-width: 768px) {
+      padding-top: 0;
+    }
     h2 {
       color: #161932;
       font-size: 2rem;
