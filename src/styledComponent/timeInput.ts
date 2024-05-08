@@ -8,7 +8,7 @@ export const TimeInputDiv = styled.div`
 
   @media screen and (min-width: 768px) {
     flex-direction: column;
-    gap: 1rem;
+    gap: 2rem;
     align-items: start;
   }
   & > span {

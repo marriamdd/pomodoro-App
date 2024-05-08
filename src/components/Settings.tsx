@@ -144,6 +144,7 @@ const SettingsContainer = styled.div`
     width: 54rem;
     height: 55rem;
     margin-inline: -6rem;
+    padding-bottom: 0rem;
   }
   .buttonDiv {
     width: 100%;
@@ -164,7 +165,7 @@ const SettingsContainer = styled.div`
       font-weight: 700;
       @media screen and (min-width: 768px) {
         left: 19rem;
-        top: 3rem;
+        button: 3rem;
       }
     }
     & > button:hover {
@@ -180,6 +181,8 @@ const SettingsContainer = styled.div`
     border-bottom: 1.5px solid #e3e1e1;
     @media screen and (min-width: 768px) {
       padding-top: 0;
+      margin-top: -7rem;
+      padding-bottom: 4rem;
     }
     h2 {
       color: #161932;

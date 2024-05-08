@@ -6,16 +6,14 @@ export const ColorSection = styled.section`
 
   align-items: center;
   gap: 2rem;
-  /* margin: 3rem 1rem 1rem; */
-  /* margin-bottom: 3rem; */
-  /* padding-bottom: 3rem; */
+
   @media screen and (min-width: 768px) {
     flex-direction: row;
 
     justify-content: center;
     align-items: center;
 
-    margin: 3rem 1rem 1rem;
+    margin: 4rem 1rem 0rem;
     padding-inline: 4rem;
     h2 {
       padding: 0;
