@@ -1,6 +1,6 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { TimerContext } from "../App";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+import { buildStyles } from "react-circular-progressbar";
 import {
   StyledCircularDiv,
   StyledCircularProgressbar,
@@ -8,18 +8,11 @@ import {
 
 export default function PomodoroComponent() {
   const {
-    setShowSettings,
-    showSettings,
-    setLongBreak,
     setPause,
-    setPomodoro,
-    setShortBreak,
-    shortbreak,
-    longbreak,
+
     pomodoro,
     pause,
-    category,
-    setCategory,
+
     secondsLeft,
     setSecondsLeft,
     secondRef,
@@ -27,10 +20,7 @@ export default function PomodoroComponent() {
     font,
   } = useContext(TimerContext);
 
-  let pomoRef = useRef(pomodoro);
-  let pauseRef = useRef(pause);
-
-  let initTimer = () => {
+  const initTimer = () => {
     setSecondsLeft(pomodoro * 60);
     const nextSeconds = pomodoro * 60;
     secondRef.current = nextSeconds;
@@ -46,17 +36,17 @@ export default function PomodoroComponent() {
   }, []);
 
   useEffect(() => {
-    // const nextSeconds = pomodoro * 60;
-    // secondRef.current = nextSeconds;
-
     const interval = setInterval(() => {
       if (pause) {
         return;
       }
 
-      // initTimer();
       tick();
     }, 1000);
+
+    if (secondRef.current == 0) {
+      clearInterval(interval);
+    }
 
     return () => clearInterval(interval);
   }, [pomodoro, pause]);
@@ -64,9 +54,9 @@ export default function PomodoroComponent() {
   const totalSeconds = pomodoro * 60;
   const percentage = Math.round((secondsLeft / totalSeconds) * 100);
   const minutes = Math.floor(secondsLeft / 60);
-  let seconds = secondsLeft % 60;
+  const seconds = secondsLeft % 60;
   const secondsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;
-  let customStyle = {
+  const customStyle = {
     text: {
       fontFamily: font,
     },

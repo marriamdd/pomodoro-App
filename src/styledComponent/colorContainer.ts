@@ -8,6 +8,7 @@ export const ColorSection = styled.section`
   gap: 2rem;
   /* margin: 3rem 1rem 1rem; */
   /* margin-bottom: 3rem; */
+  /* padding-bottom: 3rem; */
   @media screen and (min-width: 768px) {
     flex-direction: row;
 

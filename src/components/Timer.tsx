@@ -1,12 +1,13 @@
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
+// import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import styled from "styled-components";
-import { createRef, useContext, useEffect, useRef } from "react";
+import { useContext } from "react";
 import { TimerContext } from "../App";
 import PomodoroComponent from "./PomodoroComponent";
 import LongBreakComponent from "./LongBreakComponent";
 import ShortBreakComponent from "./ShortBreakComponent";
-import { StyledCircularProgressbar } from "../styledComponent/CircularPRogressbar";
+// import ShortBreakComponent from "./ShortBreakComponent";
+// import { StyledCircularProgressbar } from "../styledComponent/CircularPRogressbar";
 export default function Timer() {
   const handleSettingsClick = () => {
     setShowSettings(!showSettings);
@@ -14,32 +15,21 @@ export default function Timer() {
   const {
     setShowSettings,
     showSettings,
-    setLongBreak,
-    setPause,
-    setPomodoro,
-    setShortBreak,
-    shortbreak,
-    longbreak,
-    pomodoro,
-    pause,
+
     category,
     setCategory,
-    secondsLeft,
-    setSecondsLeft,
-    secondRef,
+
     color,
-    font,
   } = useContext(TimerContext);
   const options = ["pomodoro", "short break", "long break"];
 
-  let activeCategory = category.replace(" ", "");
   return (
     <MainCard color={color}>
       <div className="pomodoroDiv">
         <h2 className="appTitle">pomodoro</h2>
       </div>
       <div className="optionsContainer">
-        {options.map((item, index) => (
+        {options.map((item) => (
           <div
             key={Math.random()}
             onClick={() => {
@@ -52,35 +42,9 @@ export default function Timer() {
         ))}
       </div>
       <div className="circleContainer">
-        {category === "long break" && secondRef.current > 0 ? (
-          <LongBreakComponent />
-        ) : category === "pomodoro" && pomodoro > 0 ? (
-          <PomodoroComponent />
-        ) : category === "short break" && shortbreak > 0 ? (
-          <ShortBreakComponent />
-        ) : (
-          <div>
-            <div
-              onClick={() => setPause(!pause)}
-              style={{ width: "320px", height: "300px" }}
-            >
-              <StyledCircularProgressbar
-                value={100}
-                text={`00:00`}
-                background
-                backgroundPadding={2}
-                className="custom-progress-bar"
-                styles={buildStyles({
-                  textColor: `#D7E0FF`,
-                  textSize: "32px",
-                  trailColor: "#161932",
-                  pathColor: color,
-                  backgroundColor: "#161932",
-                })}
-              />
-            </div>
-          </div>
-        )}
+        {category == "long break" && <LongBreakComponent />}
+        {category == "short break" && <ShortBreakComponent />}
+        {category == "pomodoro" && <PomodoroComponent />}
         <h2>PAUSE</h2>;
       </div>
       <div className="buttonDiv">

@@ -10,15 +10,13 @@ export default function Settings() {
     setShowSettings,
     showSettings,
     setLongBreak,
-    setPause,
+
     setPomodoro,
     setShortBreak,
     shortbreak,
     longbreak,
     pomodoro,
-    pause,
-    category,
-    setCategory,
+
     colorsArray,
     color,
     setColor,
@@ -140,7 +138,7 @@ const SettingsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
+  padding-bottom: 3rem;
   @media screen and (min-width: 768px) {
     top: 6rem;
     width: 54rem;
@@ -148,12 +146,11 @@ const SettingsContainer = styled.div`
     margin-inline: -6rem;
   }
   .buttonDiv {
-    position: relative;
     width: 100%;
 
     & > button {
       position: absolute;
-      top: -1rem;
+      bottom: -3rem;
       right: 9rem;
       width: 140px;
       height: 53px;
@@ -196,7 +193,7 @@ const SettingsContainer = styled.div`
 `;
 const Line = styled.div`
   width: 90%;
-  height: 1px;
+  min-height: 1px;
   background: #e3e1e1;
   align-self: center;
 `;

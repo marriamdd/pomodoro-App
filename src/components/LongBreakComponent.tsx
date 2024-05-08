@@ -1,49 +1,73 @@
-import React, { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { TimerContext } from "../App";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { StyledCircularProgressbar } from "../styledComponent/CircularPRogressbar";
+import { buildStyles } from "react-circular-progressbar";
+import {
+  StyledCircularDiv,
+  StyledCircularProgressbar,
+} from "../styledComponent/CircularPRogressbar";
 
 export default function LongBreakComponent() {
   const {
-    setShowSettings,
-    showSettings,
-    setLongBreak,
     setPause,
-    setPomodoro,
-    setShortBreak,
-    shortbreak,
+
     longbreak,
-    pomodoro,
     pause,
-    category,
-    setCategory,
+
     secondsLeft,
     setSecondsLeft,
+    secondRef,
     color,
+    font,
   } = useContext(TimerContext);
 
-  let longRef = useRef(longbreak);
+  const initTimer = () => {
+    setSecondsLeft(longbreak * 60);
+    const nextSeconds = longbreak * 60;
+    secondRef.current = nextSeconds;
+  };
+
+  const tick = () => {
+    secondRef.current--;
+    setSecondsLeft(secondRef.current);
+  };
+
   useEffect(() => {
-    let intervalId = setInterval(() => {
+    initTimer();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
       if (pause) {
         return;
       }
-      if (longRef.current > 0) {
-        setLongBreak((prev) => prev - 1);
-      }
+
+      tick();
     }, 1000);
 
-    return () => clearInterval(intervalId);
-  }, [longRef.current, pause]);
+    if (secondRef.current == 0) {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [longbreak, pause]);
+
+  const totalSeconds = longbreak * 60;
+  const percentage = Math.round((secondsLeft / totalSeconds) * 100);
+  const minutes = Math.floor(secondsLeft / 60);
+  const seconds = secondsLeft % 60;
+  const secondsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;
+  const customStyle = {
+    text: {
+      fontFamily: font,
+    },
+  };
+
   return (
     <div>
-      <div
-        onClick={() => setPause(!pause)}
-        style={{ width: "320px", height: "300px" }}
-      >
+      <StyledCircularDiv onClick={() => setPause(!pause)}>
         <StyledCircularProgressbar
-          value={60}
-          text={`${longbreak}`}
+          value={percentage}
+          text={minutes + ":" + secondsDisplay}
           background
           backgroundPadding={2}
           className="custom-progress-bar"
@@ -51,11 +75,12 @@ export default function LongBreakComponent() {
             textColor: `#D7E0FF`,
             textSize: "32px",
             trailColor: "#161932",
-            backgroundColor: "#161932",
             pathColor: color,
+            backgroundColor: "#161932",
+            ...customStyle,
           })}
         />
-      </div>
+      </StyledCircularDiv>
     </div>
   );
 }

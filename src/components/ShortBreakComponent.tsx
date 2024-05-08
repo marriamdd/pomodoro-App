@@ -1,61 +1,86 @@
-import React, { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import { TimerContext } from "../App";
-import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
-import { StyledCircularProgressbar } from "../styledComponent/CircularPRogressbar";
+import { buildStyles } from "react-circular-progressbar";
+import {
+  StyledCircularDiv,
+  StyledCircularProgressbar,
+} from "../styledComponent/CircularPRogressbar";
 
 export default function ShortBreakComponent() {
   const {
-    setShowSettings,
-    showSettings,
-    setLongBreak,
     setPause,
-    setPomodoro,
-    setShortBreak,
+
     shortbreak,
-    longbreak,
-    pomodoro,
     pause,
-    category,
-    setCategory,
+
     secondsLeft,
     setSecondsLeft,
+    secondRef,
     color,
+    font,
   } = useContext(TimerContext);
 
-  let shortRef = useRef(shortbreak);
+  const initTimer = () => {
+    setSecondsLeft(shortbreak * 60);
+    const nextSeconds = shortbreak * 60;
+    secondRef.current = nextSeconds;
+  };
+
+  const tick = () => {
+    secondRef.current--;
+    setSecondsLeft(secondRef.current);
+  };
+
   useEffect(() => {
-    let intervalId = setInterval(() => {
+    initTimer();
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
       if (pause) {
         return;
       }
-      if (shortRef.current > 0) {
-        setShortBreak((prev) => prev - 1);
-      }
+
+      tick();
     }, 1000);
 
-    return () => clearInterval(intervalId);
-  }, [shortRef.current, pause]);
+    if (secondRef.current == 0) {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [shortbreak, pause]);
+
+  const totalSeconds = shortbreak * 60;
+  const percentage = Math.round((secondsLeft / totalSeconds) * 100);
+  const minutes = Math.floor(secondsLeft / 60);
+  const seconds = secondsLeft % 60;
+  const secondsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;
+  const customStyle = {
+    text: {
+      fontFamily: font,
+    },
+  };
+
   return (
     <div>
-      <div
-        onClick={() => setPause(!pause)}
-        style={{ width: "300px", height: "300px" }}
-      >
+      <StyledCircularDiv onClick={() => setPause(!pause)}>
         <StyledCircularProgressbar
-          value={60}
+          value={percentage}
+          text={minutes + ":" + secondsDisplay}
           background
           backgroundPadding={2}
-          text={`${shortbreak}`}
           className="custom-progress-bar"
           styles={buildStyles({
             textColor: `#D7E0FF`,
             textSize: "32px",
             trailColor: "#161932",
-            backgroundColor: "#161932",
             pathColor: color,
+            backgroundColor: "#161932",
+            ...customStyle,
           })}
         />
-      </div>
+      </StyledCircularDiv>
     </div>
   );
 }
