@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { TimerContext } from "../App";
 import { buildStyles } from "react-circular-progressbar";
 import {
@@ -13,49 +13,63 @@ export default function ShortBreakComponent() {
 
     shortbreak,
     pause,
-
-    secondsLeft,
-    setSecondsLeft,
-    secondRef,
+    shortSecondsLeft,
+    shortSecondsLeftRef,
+    setShortSecondsLeft,
+    condition,
+    setCondition,
     color,
     font,
   } = useContext(TimerContext);
+  const shortBreakRef = useRef(shortbreak);
 
+  console.log("short br", shortbreak);
+  console.log("short ref", shortBreakRef);
   const initTimer = () => {
-    setSecondsLeft(shortbreak * 60);
+    setShortSecondsLeft(shortbreak * 60);
     const nextSeconds = shortbreak * 60;
-    secondRef.current = nextSeconds;
+    shortSecondsLeftRef.current = nextSeconds;
   };
 
   const tick = () => {
-    secondRef.current--;
-    setSecondsLeft(secondRef.current);
+    shortSecondsLeftRef.current--;
+    setShortSecondsLeft(shortSecondsLeftRef.current);
   };
 
   useEffect(() => {
-    initTimer();
+    if (+shortBreakRef !== +shortbreak) {
+      initTimer();
+    }
   }, [shortbreak]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (pause) {
         return;
+      } else if (!pause) {
+        setCondition("PAUSE");
       }
 
       tick();
     }, 1000);
 
-    if (secondRef.current == 0) {
+    if (shortSecondsLeftRef.current == 0) {
       clearInterval(interval);
     }
 
     return () => clearInterval(interval);
   }, [shortbreak, pause]);
 
+  useEffect(() => {
+    if (pause && condition !== "START") {
+      setCondition("CONTINUE");
+    }
+  }, [pause]);
+
   const totalSeconds = shortbreak * 60;
-  const percentage = Math.round((secondsLeft / totalSeconds) * 100);
-  const minutes = Math.floor(secondsLeft / 60);
-  const seconds = secondsLeft % 60;
+  const percentage = Math.round((shortSecondsLeft / totalSeconds) * 100);
+  const minutes = Math.floor(shortSecondsLeft / 60);
+  const seconds = shortSecondsLeft % 60;
   const secondsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;
   const customStyle = {
     text: {
@@ -64,6 +78,7 @@ export default function ShortBreakComponent() {
   };
   useEffect(() => {
     if (seconds == 0) {
+      setCondition("START");
       initTimer();
       setPause(true);
     }

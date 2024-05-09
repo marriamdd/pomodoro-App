@@ -13,7 +13,7 @@ export default function PomodoroComponent() {
 
     pomodoro,
     pause,
-    category,
+    // category,
     secondsLeft,
     setSecondsLeft,
     secondRef,
@@ -68,9 +68,7 @@ export default function PomodoroComponent() {
       setPause(true);
     }
   }, [seconds]);
-  console.log(pomodoro);
-  console.log("font now", font);
-  console.log(category, "categori axla");
+
   return (
     <CircularContainer>
       <StyledCircularDiv onClick={() => setPause(!pause)}>

@@ -1,4 +1,3 @@
-// import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import styled from "styled-components";
 import { useContext } from "react";
@@ -17,7 +16,8 @@ export default function Timer() {
     secondRef,
     category,
     setCategory,
-    pause,
+    // pause,
+    condition,
     color,
     font,
   } = useContext(TimerContext);
@@ -46,11 +46,12 @@ export default function Timer() {
         {category == "short break" && <ShortBreakComponent />}
         {category == "pomodoro" && <PomodoroComponent />}
 
-        {pause ? (
+        {/* {pause ? (
           <h2 style={{ fontFamily: font }}>START</h2>
         ) : (
           <h2 style={{ fontFamily: font }}>PAUSE</h2>
-        )}
+        )} */}
+        {<h2 style={{ fontFamily: font }}>{condition}</h2>}
       </div>
       <div className="buttonDiv">
         {showSettings || (
