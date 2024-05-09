@@ -20,15 +20,19 @@ interface TimerContextType {
   category: string | undefined;
   setCategory: React.Dispatch<React.SetStateAction<string | undefined>>;
 
-  secondsLeft: number;
-  setSecondsLeft: React.Dispatch<React.SetStateAction<number>>;
-  secondRef: React.MutableRefObject<number>;
+  pomodoSecondsLeft: number;
+  setPomodoSecondsLeft: React.Dispatch<React.SetStateAction<number>>;
+  pomoSecondRef: React.MutableRefObject<number>;
   colorsArray: string[];
   color: string;
   setColor: React.Dispatch<React.SetStateAction<string>>;
   fontsArray: string[];
   setFont: React.Dispatch<React.SetStateAction<string>>;
   font: string;
+
+  longSecondsLeft: number;
+  setLongSecondsLeft: React.Dispatch<React.SetStateAction<number>>;
+  longSecondRef: React.MutableRefObject<number>;
 
   shortSecondsLeft: number;
   setShortSecondsLeft: React.Dispatch<React.SetStateAction<number>>;
@@ -51,14 +55,18 @@ export const TimerContext = createContext<TimerContextType>({
   setPause: () => {},
   setCategory: () => {},
   category: "pomodoro",
-  secondsLeft: 60,
-  setSecondsLeft: () => {},
+  pomodoSecondsLeft: 60,
+  setPomodoSecondsLeft: () => {},
 
   shortSecondsLeft: 60,
   setShortSecondsLeft: () => {},
   shortSecondsLeftRef: { current: 60 },
 
-  secondRef: { current: 60 },
+  longSecondsLeft: 60,
+  setLongSecondsLeft: () => {},
+  longSecondRef: { current: 60 },
+
+  pomoSecondRef: { current: 60 },
   colorsArray: [""],
   color: "",
   setColor: () => {},
@@ -77,8 +85,11 @@ function App() {
   const [condition, setCondition] = useState("start");
   const [category, setCategory] = useState<string | undefined>("pomodoro");
 
-  const [secondsLeft, setSecondsLeft] = useState(0);
-  const secondRef = useRef(secondsLeft);
+  const [pomodoSecondsLeft, setPomodoSecondsLeft] = useState(0);
+  const pomoSecondRef = useRef(pomodoSecondsLeft);
+
+  const [longSecondsLeft, setLongSecondsLeft] = useState(0);
+  const longSecondRef = useRef(longSecondsLeft);
 
   const [shortSecondsLeft, setShortSecondsLeft] = useState(0);
   const shortSecondsLeftRef = useRef(shortSecondsLeft);
@@ -91,8 +102,8 @@ function App() {
   const [font, setFont] = useState("Kumbh Sans");
   const fontsArray = ["Kumbh Sans", "Roboto Slab", "Space Mono"];
 
-  console.log("pomodoroSeconds:", secondsLeft);
-  console.log("shortseconds", shortSecondsLeft);
+  // console.log("pomodoroSeconds:", secondsLeft);
+  // console.log("shortseconds", shortSecondsLeft);
   return (
     <TimerContext.Provider
       value={{
@@ -111,9 +122,9 @@ function App() {
         setPause,
         category,
         setCategory,
-        secondsLeft,
-        setSecondsLeft,
-        secondRef,
+        pomodoSecondsLeft,
+        setPomodoSecondsLeft,
+        pomoSecondRef,
         colorsArray,
         color,
         setColor,
@@ -122,6 +133,9 @@ function App() {
         font,
         setCondition,
         condition,
+        longSecondsLeft,
+        setLongSecondsLeft,
+        longSecondRef,
       }}
     >
       <Timer />

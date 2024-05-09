@@ -23,8 +23,6 @@ export default function ShortBreakComponent() {
   } = useContext(TimerContext);
   const shortBreakRef = useRef(shortbreak);
 
-  console.log("short br", shortbreak);
-  console.log("short ref", shortBreakRef);
   const initTimer = () => {
     setShortSecondsLeft(shortbreak * 60);
     const nextSeconds = shortbreak * 60;
@@ -37,7 +35,7 @@ export default function ShortBreakComponent() {
   };
 
   useEffect(() => {
-    if (+shortBreakRef !== +shortbreak) {
+    if (+shortBreakRef.current !== +shortbreak) {
       initTimer();
     }
   }, [shortbreak]);
@@ -79,7 +77,9 @@ export default function ShortBreakComponent() {
   useEffect(() => {
     if (seconds == 0) {
       setCondition("START");
+
       initTimer();
+
       setPause(true);
     }
   }, [seconds]);

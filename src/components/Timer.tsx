@@ -13,7 +13,7 @@ export default function Timer() {
   const {
     setShowSettings,
     showSettings,
-    secondRef,
+    // pomoSecondRef,
     category,
     setCategory,
     // pause,
@@ -22,7 +22,7 @@ export default function Timer() {
     font,
   } = useContext(TimerContext);
   const options = ["pomodoro", "short break", "long break"];
-  console.log(secondRef);
+
   return (
     <MainCard color={color}>
       <div className="pomodoroDiv">

@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { TimerContext } from "../App";
 import { buildStyles } from "react-circular-progressbar";
 import {
@@ -10,52 +10,62 @@ import {
 export default function PomodoroComponent() {
   const {
     setPause,
-
+    setCondition,
     pomodoro,
     pause,
-    // category,
-    secondsLeft,
-    setSecondsLeft,
-    secondRef,
+    condition,
+    pomodoSecondsLeft,
+    setPomodoSecondsLeft,
+    pomoSecondRef,
     color,
     font,
   } = useContext(TimerContext);
-
+  const pomodoroRef = useRef(pomodoro);
   const initTimer = () => {
-    setSecondsLeft(pomodoro * 60);
+    setPomodoSecondsLeft(pomodoro * 60);
     const nextSeconds = pomodoro * 60;
-    secondRef.current = nextSeconds;
+    pomoSecondRef.current = nextSeconds;
   };
 
   const tick = () => {
-    secondRef.current--;
-    setSecondsLeft(secondRef.current);
+    pomoSecondRef.current--;
+    setPomodoSecondsLeft(pomoSecondRef.current);
   };
 
   useEffect(() => {
-    initTimer();
+    if (+pomodoroRef.current !== +pomodoro) {
+      initTimer();
+    }
   }, [pomodoro]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (pause) {
         return;
+      } else if (!pause) {
+        setCondition("PAUSE");
       }
 
       tick();
     }, 1000);
 
-    if (secondRef.current == 0) {
+    if (pomoSecondRef.current == 0) {
       clearInterval(interval);
     }
 
     return () => clearInterval(interval);
   }, [pomodoro, pause]);
 
+  useEffect(() => {
+    if (pause && condition !== "START") {
+      setCondition("CONTINUE");
+    }
+  }, [pause]);
+
   const totalSeconds = pomodoro * 60;
-  const percentage = Math.round((secondsLeft / totalSeconds) * 100);
-  const minutes = Math.floor(secondsLeft / 60);
-  const seconds = secondsLeft % 60;
+  const percentage = Math.round((pomodoSecondsLeft / totalSeconds) * 100);
+  const minutes = Math.floor(pomodoSecondsLeft / 60);
+  const seconds = pomodoSecondsLeft % 60;
   const secondsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;
   const customStyle = {
     text: {
@@ -64,6 +74,7 @@ export default function PomodoroComponent() {
   };
   useEffect(() => {
     if (seconds == 0) {
+      setCondition("START");
       initTimer();
       setPause(true);
     }

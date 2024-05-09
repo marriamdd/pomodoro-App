@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { TimerContext } from "../App";
 import { buildStyles } from "react-circular-progressbar";
 import {
@@ -13,49 +13,60 @@ export default function LongBreakComponent() {
 
     longbreak,
     pause,
-
-    secondsLeft,
-    setSecondsLeft,
-    secondRef,
+    setCondition,
+    condition,
+    longSecondsLeft,
+    setLongSecondsLeft,
+    longSecondRef,
     color,
     font,
   } = useContext(TimerContext);
+  const longBreakRef = useRef(longbreak);
 
   const initTimer = () => {
-    setSecondsLeft(longbreak * 60);
+    setLongSecondsLeft(longbreak * 60);
     const nextSeconds = longbreak * 60;
-    secondRef.current = nextSeconds;
+    longSecondRef.current = nextSeconds;
   };
 
   const tick = () => {
-    secondRef.current--;
-    setSecondsLeft(secondRef.current);
+    longSecondRef.current--;
+    setLongSecondsLeft(longSecondRef.current);
   };
 
   useEffect(() => {
-    initTimer();
+    if (+longBreakRef.current !== +longbreak) {
+      initTimer();
+    }
   }, [longbreak]);
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (pause) {
         return;
+      } else if (!pause) {
+        setCondition("PAUSE");
       }
 
       tick();
     }, 1000);
 
-    if (secondRef.current == 0) {
+    if (longSecondRef.current == 0) {
       clearInterval(interval);
     }
 
     return () => clearInterval(interval);
   }, [longbreak, pause]);
 
+  useEffect(() => {
+    if (pause && condition !== "START") {
+      setCondition("CONTINUE");
+    }
+  }, [pause]);
   const totalSeconds = longbreak * 60;
-  const percentage = Math.round((secondsLeft / totalSeconds) * 100);
-  const minutes = Math.floor(secondsLeft / 60);
-  const seconds = secondsLeft % 60;
+  const percentage = Math.round((longSecondsLeft / totalSeconds) * 100);
+  const minutes = Math.floor(longSecondsLeft / 60);
+  const seconds = longSecondsLeft % 60;
   const secondsDisplay = seconds < 10 ? `0${seconds}` : `${seconds}`;
   const customStyle = {
     text: {
@@ -64,6 +75,7 @@ export default function LongBreakComponent() {
   };
   useEffect(() => {
     if (seconds == 0) {
+      setCondition("START");
       initTimer();
       setPause(true);
     }
