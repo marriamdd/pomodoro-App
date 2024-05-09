@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { TimerContext } from "../App";
 import { buildStyles } from "react-circular-progressbar";
 import {
+  CircularContainer,
   StyledCircularDiv,
   StyledCircularProgressbar,
 } from "../styledComponent/CircularPRogressbar";
@@ -24,8 +25,6 @@ export default function PomodoroComponent() {
     setSecondsLeft(pomodoro * 60);
     const nextSeconds = pomodoro * 60;
     secondRef.current = nextSeconds;
-    console.log("gamoidgaxa init", nextSeconds);
-    console.log("category", category);
   };
 
   const tick = () => {
@@ -73,13 +72,13 @@ export default function PomodoroComponent() {
   console.log("font now", font);
   console.log(category, "categori axla");
   return (
-    <div>
+    <CircularContainer>
       <StyledCircularDiv onClick={() => setPause(!pause)}>
         <StyledCircularProgressbar
           value={percentage}
           text={minutes + ":" + secondsDisplay}
           background
-          backgroundPadding={2}
+          backgroundPadding={3}
           className="custom-progress-bar"
           styles={buildStyles({
             textColor: `#D7E0FF`,
@@ -91,6 +90,6 @@ export default function PomodoroComponent() {
           })}
         />
       </StyledCircularDiv>
-    </div>
+    </CircularContainer>
   );
 }

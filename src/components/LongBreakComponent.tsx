@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { TimerContext } from "../App";
 import { buildStyles } from "react-circular-progressbar";
 import {
+  CircularContainer,
   StyledCircularDiv,
   StyledCircularProgressbar,
 } from "../styledComponent/CircularPRogressbar";
@@ -68,7 +69,7 @@ export default function LongBreakComponent() {
     }
   }, [seconds]);
   return (
-    <div>
+    <CircularContainer>
       <StyledCircularDiv onClick={() => setPause(!pause)}>
         <StyledCircularProgressbar
           value={percentage}
@@ -86,6 +87,6 @@ export default function LongBreakComponent() {
           })}
         />
       </StyledCircularDiv>
-    </div>
+    </CircularContainer>
   );
 }

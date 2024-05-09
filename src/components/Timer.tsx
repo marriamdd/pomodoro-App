@@ -19,6 +19,7 @@ export default function Timer() {
     setCategory,
     pause,
     color,
+    font,
   } = useContext(TimerContext);
   const options = ["pomodoro", "short break", "long break"];
   console.log(secondRef);
@@ -44,8 +45,12 @@ export default function Timer() {
         {category == "long break" && <LongBreakComponent />}
         {category == "short break" && <ShortBreakComponent />}
         {category == "pomodoro" && <PomodoroComponent />}
-        {category == undefined && <PomodoroComponent />}
-        {pause ? <h2>START</h2> : <h2>PAUSE</h2>};
+
+        {pause ? (
+          <h2 style={{ fontFamily: font }}>START</h2>
+        ) : (
+          <h2 style={{ fontFamily: font }}>PAUSE</h2>
+        )}
       </div>
       <div className="buttonDiv">
         {showSettings || (
@@ -119,14 +124,16 @@ const MainCard = styled.div<{ color: string }>`
     cursor: pointer;
     & > h2 {
       position: absolute;
-      bottom: 9rem;
+      bottom: 8rem;
       color: #d7e0ff;
-
       font-size: 14px;
       font-style: normal;
       font-weight: 700;
       line-height: normal;
       letter-spacing: 13.125px;
+      @media screen and (min-width: 768px) {
+        bottom: 10rem;
+      }
     }
   }
   .appTitle {
