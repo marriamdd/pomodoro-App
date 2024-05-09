@@ -1,6 +1,6 @@
 import Settings from "./components/Settings";
 import Timer from "./components/Timer";
-import styled from "styled-components";
+// import styled from "styled-components";
 import { useState, createContext, useRef } from "react";
 interface TimerContextType {
   showSettings: boolean;
@@ -13,8 +13,9 @@ interface TimerContextType {
   setLongBreak: React.Dispatch<React.SetStateAction<number>>;
   pause: boolean;
   setPause: React.Dispatch<React.SetStateAction<boolean>>;
-  category: string;
-  setCategory: React.Dispatch<React.SetStateAction<string>>;
+  category: string | undefined;
+  setCategory: React.Dispatch<React.SetStateAction<string | undefined>>;
+
   secondsLeft: number;
   setSecondsLeft: React.Dispatch<React.SetStateAction<number>>;
   secondRef: React.MutableRefObject<number>;
@@ -55,9 +56,10 @@ function App() {
   const [shortbreak, setShortBreak] = useState(2);
   const [longbreak, setLongBreak] = useState(3);
   const [pause, setPause] = useState(false);
-  const [category, setCategory] = useState("pomodoro");
+  const [category, setCategory] = useState<string | undefined>("pomodoro");
+
   const [secondsLeft, setSecondsLeft] = useState(0);
-  let secondRef = useRef(secondsLeft);
+  const secondRef = useRef(secondsLeft);
   const peachColor = "#F87070";
   const lightBlue = "#70F3F8";
   const purple = "#D881F8";

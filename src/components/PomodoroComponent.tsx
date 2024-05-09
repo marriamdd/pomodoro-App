@@ -12,7 +12,7 @@ export default function PomodoroComponent() {
 
     pomodoro,
     pause,
-
+    category,
     secondsLeft,
     setSecondsLeft,
     secondRef,
@@ -24,6 +24,8 @@ export default function PomodoroComponent() {
     setSecondsLeft(pomodoro * 60);
     const nextSeconds = pomodoro * 60;
     secondRef.current = nextSeconds;
+    console.log("gamoidgaxa init", nextSeconds);
+    console.log("category", category);
   };
 
   const tick = () => {
@@ -61,8 +63,15 @@ export default function PomodoroComponent() {
       fontFamily: font,
     },
   };
+  useEffect(() => {
+    if (seconds == 0) {
+      initTimer();
+      setPause(true);
+    }
+  }, [seconds]);
   console.log(pomodoro);
   console.log("font now", font);
+  console.log(category, "categori axla");
   return (
     <div>
       <StyledCircularDiv onClick={() => setPause(!pause)}>

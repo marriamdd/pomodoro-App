@@ -61,7 +61,12 @@ export default function LongBreakComponent() {
       fontFamily: font,
     },
   };
-
+  useEffect(() => {
+    if (seconds == 0) {
+      initTimer();
+      setPause(true);
+    }
+  }, [seconds]);
   return (
     <div>
       <StyledCircularDiv onClick={() => setPause(!pause)}>

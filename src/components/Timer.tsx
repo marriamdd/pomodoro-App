@@ -14,14 +14,14 @@ export default function Timer() {
   const {
     setShowSettings,
     showSettings,
-
+    secondRef,
     category,
     setCategory,
-
+    pause,
     color,
   } = useContext(TimerContext);
   const options = ["pomodoro", "short break", "long break"];
-
+  console.log(secondRef);
   return (
     <MainCard color={color}>
       <div className="pomodoroDiv">
@@ -44,7 +44,8 @@ export default function Timer() {
         {category == "long break" && <LongBreakComponent />}
         {category == "short break" && <ShortBreakComponent />}
         {category == "pomodoro" && <PomodoroComponent />}
-        <h2>PAUSE</h2>;
+        {category == undefined && <PomodoroComponent />}
+        {pause ? <h2>START</h2> : <h2>PAUSE</h2>};
       </div>
       <div className="buttonDiv">
         {showSettings || (
