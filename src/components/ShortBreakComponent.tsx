@@ -33,7 +33,7 @@ export default function ShortBreakComponent() {
 
   useEffect(() => {
     initTimer();
-  }, []);
+  }, [shortbreak]);
 
   useEffect(() => {
     const interval = setInterval(() => {

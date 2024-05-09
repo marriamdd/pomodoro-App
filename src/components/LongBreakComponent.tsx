@@ -33,7 +33,7 @@ export default function LongBreakComponent() {
 
   useEffect(() => {
     initTimer();
-  }, []);
+  }, [longbreak]);
 
   useEffect(() => {
     const interval = setInterval(() => {

@@ -33,7 +33,7 @@ export default function PomodoroComponent() {
 
   useEffect(() => {
     initTimer();
-  }, []);
+  }, [pomodoro]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -61,6 +61,7 @@ export default function PomodoroComponent() {
       fontFamily: font,
     },
   };
+  console.log(pomodoro);
   console.log("font now", font);
   return (
     <div>

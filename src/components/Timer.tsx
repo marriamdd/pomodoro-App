@@ -6,8 +6,7 @@ import { TimerContext } from "../App";
 import PomodoroComponent from "./PomodoroComponent";
 import LongBreakComponent from "./LongBreakComponent";
 import ShortBreakComponent from "./ShortBreakComponent";
-// import ShortBreakComponent from "./ShortBreakComponent";
-// import { StyledCircularProgressbar } from "../styledComponent/CircularPRogressbar";
+
 export default function Timer() {
   const handleSettingsClick = () => {
     setShowSettings(!showSettings);
