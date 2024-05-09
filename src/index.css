@@ -10,11 +10,8 @@ body {
   align-items: center;
   justify-content: center;
   background: #1e213f;
-  font-family: "Kumbh Sans", sans-serif;
 }
-button {
-  font-family: "Kumbh Sans", sans-serif;
-}
+
 html {
   font-size: 62.5%;
 }

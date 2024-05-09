@@ -159,7 +159,7 @@ const SettingsContainer = styled.div`
       background: #f87070;
       color: #fff;
       text-align: center;
-      font-family: "Kumbh Sans";
+
       font-size: 16px;
       border: none;
       font-weight: 700;

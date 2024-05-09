@@ -1,6 +1,6 @@
 import Settings from "./components/Settings";
 import Timer from "./components/Timer";
-// import styled from "styled-components";
+
 import { useState, createContext, useRef } from "react";
 interface TimerContextType {
   showSettings: boolean;
@@ -68,36 +68,34 @@ function App() {
   const [font, setFont] = useState("Kumbh Sans");
   const fontsArray = ["Kumbh Sans", "Roboto Slab", "Space Mono"];
   return (
-    <>
-      <TimerContext.Provider
-        value={{
-          showSettings,
-          setShowSettings,
-          pomodoro,
-          setPomodoro,
-          shortbreak,
-          setShortBreak,
-          longbreak,
-          setLongBreak,
-          pause,
-          setPause,
-          category,
-          setCategory,
-          secondsLeft,
-          setSecondsLeft,
-          secondRef,
-          colorsArray,
-          color,
-          setColor,
-          fontsArray,
-          setFont,
-          font,
-        }}
-      >
-        <Timer />
-        {showSettings ? <Settings /> : null}
-      </TimerContext.Provider>
-    </>
+    <TimerContext.Provider
+      value={{
+        showSettings,
+        setShowSettings,
+        pomodoro,
+        setPomodoro,
+        shortbreak,
+        setShortBreak,
+        longbreak,
+        setLongBreak,
+        pause,
+        setPause,
+        category,
+        setCategory,
+        secondsLeft,
+        setSecondsLeft,
+        secondRef,
+        colorsArray,
+        color,
+        setColor,
+        fontsArray,
+        setFont,
+        font,
+      }}
+    >
+      <Timer />
+      {showSettings ? <Settings /> : null}
+    </TimerContext.Provider>
   );
 }
 

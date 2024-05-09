@@ -37,7 +37,7 @@ export default function Timer() {
             }}
             className={category === item ? "active" : ""}
           >
-            <span>{item}</span>
+            <span style={{ fontFamily: font }}>{item}</span>
           </div>
         ))}
       </div>
