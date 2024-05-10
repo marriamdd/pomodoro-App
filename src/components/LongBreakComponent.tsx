@@ -56,7 +56,7 @@ export default function LongBreakComponent() {
     }
 
     return () => clearInterval(interval);
-  }, [longbreak, pause]);
+  }, [longbreak, pause, longSecondRef.current]);
 
   useEffect(() => {
     if (pause && condition !== "START") {
@@ -74,12 +74,13 @@ export default function LongBreakComponent() {
     },
   };
   useEffect(() => {
-    if (seconds == 0) {
+    if (longSecondRef.current == 0) {
       setCondition("START");
       initTimer();
       setPause(true);
     }
-  }, [seconds]);
+  }, [longSecondRef.current]);
+
   return (
     <CircularContainer>
       <StyledCircularDiv onClick={() => setPause(!pause)}>

@@ -94,16 +94,11 @@ function App() {
   const [shortSecondsLeft, setShortSecondsLeft] = useState(0);
   const shortSecondsLeftRef = useRef(shortSecondsLeft);
 
-  // const [secondsLeft, setSecondsLeft] = useState(0);
-  // const secondRef = useRef(secondsLeft);
-
   const colorsArray = ["#F87070", "#70F3F8", "#D881F8"];
   const [color, setColor] = useState("#F87070");
   const [font, setFont] = useState("Kumbh Sans");
   const fontsArray = ["Kumbh Sans", "Roboto Slab", "Space Mono"];
 
-  // console.log("pomodoroSeconds:", secondsLeft);
-  // console.log("shortseconds", shortSecondsLeft);
   return (
     <TimerContext.Provider
       value={{

@@ -56,7 +56,7 @@ export default function ShortBreakComponent() {
     }
 
     return () => clearInterval(interval);
-  }, [shortbreak, pause]);
+  }, [shortbreak, pause, shortSecondsLeftRef.current]);
 
   useEffect(() => {
     if (pause && condition !== "START") {
@@ -75,14 +75,14 @@ export default function ShortBreakComponent() {
     },
   };
   useEffect(() => {
-    if (seconds == 0) {
+    if (shortSecondsLeftRef.current == 0) {
       setCondition("START");
 
       initTimer();
 
       setPause(true);
     }
-  }, [seconds]);
+  }, [shortSecondsLeftRef.current]);
   return (
     <CircularContainer>
       <StyledCircularDiv onClick={() => setPause(!pause)}>

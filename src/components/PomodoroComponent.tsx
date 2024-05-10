@@ -54,7 +54,7 @@ export default function PomodoroComponent() {
     }
 
     return () => clearInterval(interval);
-  }, [pomodoro, pause]);
+  }, [pomodoro, pause, pomoSecondRef.current]);
 
   useEffect(() => {
     if (pause && condition !== "START") {
@@ -73,12 +73,12 @@ export default function PomodoroComponent() {
     },
   };
   useEffect(() => {
-    if (seconds == 0) {
+    if (pomoSecondRef.current == 0) {
       setCondition("START");
       initTimer();
       setPause(true);
     }
-  }, [seconds]);
+  }, [pomoSecondRef.current]);
 
   return (
     <CircularContainer>
