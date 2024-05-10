@@ -24,7 +24,7 @@ export default function Settings() {
     setFont,
     font,
   } = useContext(TimerContext);
-  console.log("color", color);
+
   return (
     <SettingsContainer>
       <div className="SettingTitle">

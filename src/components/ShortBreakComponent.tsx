@@ -9,10 +9,9 @@ import {
 
 export default function ShortBreakComponent() {
   const {
-    setPause,
-
+    setNamedPause,
     shortbreak,
-    pause,
+
     shortSecondsLeft,
     shortSecondsLeftRef,
     setShortSecondsLeft,
@@ -20,7 +19,10 @@ export default function ShortBreakComponent() {
     setCondition,
     color,
     font,
+    namedPause,
+    category,
   } = useContext(TimerContext);
+
   const shortBreakRef = useRef(shortbreak);
 
   const initTimer = () => {
@@ -38,13 +40,13 @@ export default function ShortBreakComponent() {
     if (+shortBreakRef.current !== +shortbreak) {
       initTimer();
     }
-  }, [shortbreak]);
+  }, [shortbreak, category]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (pause) {
+      if (namedPause == "pause short break") {
         return;
-      } else if (!pause) {
+      } else if (namedPause == "short break") {
         setCondition("PAUSE");
       }
 
@@ -56,13 +58,13 @@ export default function ShortBreakComponent() {
     }
 
     return () => clearInterval(interval);
-  }, [shortbreak, pause, shortSecondsLeftRef.current]);
+  }, [shortbreak, namedPause, shortSecondsLeftRef.current, category]);
 
   useEffect(() => {
-    if (pause && condition !== "START") {
+    if (namedPause == "pause short break" && condition !== "START") {
       setCondition("CONTINUE");
     }
-  }, [pause]);
+  }, [namedPause, category]);
 
   const totalSeconds = shortbreak * 60;
   const percentage = Math.round((shortSecondsLeft / totalSeconds) * 100);
@@ -75,17 +77,38 @@ export default function ShortBreakComponent() {
     },
   };
   useEffect(() => {
-    if (shortSecondsLeftRef.current == 0) {
+    if (shortSecondsLeftRef.current == 0 && namedPause == "pause short break") {
       setCondition("START");
 
       initTimer();
-
-      setPause(true);
     }
-  }, [shortSecondsLeftRef.current]);
+
+    if (shortSecondsLeftRef.current == shortbreak * 60) {
+      setCondition("START");
+    } else if (namedPause == "pause short break") {
+      setCondition("CONTINUE");
+    } else if (namedPause == category) {
+      setCondition("PAUSE");
+    }
+  });
+
+  useEffect(() => {
+    setNamedPause("pause short");
+  }, []);
+
+  useEffect(() => {
+    setNamedPause("pause short break");
+  }, []);
+
   return (
     <CircularContainer>
-      <StyledCircularDiv onClick={() => setPause(!pause)}>
+      <StyledCircularDiv
+        onClick={() =>
+          setNamedPause((prev) =>
+            prev == "short break" ? "pause short break" : `${category}`
+          )
+        }
+      >
         <StyledCircularProgressbar
           value={percentage}
           text={minutes + ":" + secondsDisplay}

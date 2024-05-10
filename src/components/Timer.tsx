@@ -46,11 +46,6 @@ export default function Timer() {
         {category == "short break" && <ShortBreakComponent />}
         {category == "pomodoro" && <PomodoroComponent />}
 
-        {/* {pause ? (
-          <h2 style={{ fontFamily: font }}>START</h2>
-        ) : (
-          <h2 style={{ fontFamily: font }}>PAUSE</h2>
-        )} */}
         {<h2 style={{ fontFamily: font }}>{condition}</h2>}
       </div>
       <div className="buttonDiv">

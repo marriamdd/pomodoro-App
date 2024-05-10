@@ -9,18 +9,22 @@ import {
 
 export default function PomodoroComponent() {
   const {
-    setPause,
     setCondition,
     pomodoro,
-    pause,
+
     condition,
     pomodoSecondsLeft,
     setPomodoSecondsLeft,
     pomoSecondRef,
     color,
     font,
+    namedPause,
+    setNamedPause,
+    category,
   } = useContext(TimerContext);
+
   const pomodoroRef = useRef(pomodoro);
+
   const initTimer = () => {
     setPomodoSecondsLeft(pomodoro * 60);
     const nextSeconds = pomodoro * 60;
@@ -36,13 +40,13 @@ export default function PomodoroComponent() {
     if (+pomodoroRef.current !== +pomodoro) {
       initTimer();
     }
-  }, [pomodoro]);
+  }, [pomodoro, category]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (pause) {
+      if (namedPause == "pause pomodoro") {
         return;
-      } else if (!pause) {
+      } else if (namedPause == "pomodoro") {
         setCondition("PAUSE");
       }
 
@@ -54,13 +58,13 @@ export default function PomodoroComponent() {
     }
 
     return () => clearInterval(interval);
-  }, [pomodoro, pause, pomoSecondRef.current]);
+  }, [pomodoro, namedPause, pomoSecondRef.current, category]);
 
   useEffect(() => {
-    if (pause && condition !== "START") {
+    if (namedPause == "pause pomodoro" && condition !== "START") {
       setCondition("CONTINUE");
     }
-  }, [pause]);
+  }, [namedPause, category]);
 
   const totalSeconds = pomodoro * 60;
   const percentage = Math.round((pomodoSecondsLeft / totalSeconds) * 100);
@@ -72,17 +76,36 @@ export default function PomodoroComponent() {
       fontFamily: font,
     },
   };
+
   useEffect(() => {
-    if (pomoSecondRef.current == 0) {
+    if (pomoSecondRef.current == 0 && namedPause == "pause pomodoro") {
       setCondition("START");
+
       initTimer();
-      setPause(true);
     }
-  }, [pomoSecondRef.current]);
+
+    if (pomoSecondRef.current == pomodoro * 60) {
+      setCondition("START");
+    } else if (namedPause == "pause pomodoro") {
+      setCondition("CONTINUE");
+    } else if (namedPause == category) {
+      setCondition("PAUSE");
+    }
+  });
+
+  useEffect(() => {
+    setNamedPause("pause pomodoro");
+  }, []);
 
   return (
     <CircularContainer>
-      <StyledCircularDiv onClick={() => setPause(!pause)}>
+      <StyledCircularDiv
+        onClick={() =>
+          setNamedPause((prev) =>
+            prev == "pomodoro" ? "pause pomodoro" : `${category}`
+          )
+        }
+      >
         <StyledCircularProgressbar
           value={percentage}
           text={minutes + ":" + secondsDisplay}

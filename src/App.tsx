@@ -1,7 +1,7 @@
 import Settings from "./components/Settings";
 import Timer from "./components/Timer";
 
-import { useState, createContext, useRef } from "react";
+import { useState, createContext, useRef, useEffect } from "react";
 interface TimerContextType {
   showSettings: boolean;
   setShowSettings: React.Dispatch<React.SetStateAction<boolean>>;
@@ -18,7 +18,7 @@ interface TimerContextType {
   setCondition: React.Dispatch<React.SetStateAction<string>>;
 
   category: string | undefined;
-  setCategory: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setCategory: React.Dispatch<React.SetStateAction<string>>;
 
   pomodoSecondsLeft: number;
   setPomodoSecondsLeft: React.Dispatch<React.SetStateAction<number>>;
@@ -33,6 +33,8 @@ interface TimerContextType {
   longSecondsLeft: number;
   setLongSecondsLeft: React.Dispatch<React.SetStateAction<number>>;
   longSecondRef: React.MutableRefObject<number>;
+  namedPause: string;
+  setNamedPause: React.Dispatch<React.SetStateAction<string>>;
 
   shortSecondsLeft: number;
   setShortSecondsLeft: React.Dispatch<React.SetStateAction<number>>;
@@ -73,6 +75,8 @@ export const TimerContext = createContext<TimerContextType>({
   fontsArray: ["Kumbh Sans"],
   setFont: () => {},
   font: "",
+  namedPause: "",
+  setNamedPause: () => {},
 });
 
 function App() {
@@ -83,7 +87,9 @@ function App() {
   const [pause, setPause] = useState(false);
 
   const [condition, setCondition] = useState("start");
-  const [category, setCategory] = useState<string | undefined>("pomodoro");
+  const [category, setCategory] = useState<string>("pomodoro");
+
+  const [namedPause, setNamedPause] = useState(category);
 
   const [pomodoSecondsLeft, setPomodoSecondsLeft] = useState(0);
   const pomoSecondRef = useRef(pomodoSecondsLeft);
@@ -98,6 +104,10 @@ function App() {
   const [color, setColor] = useState("#F87070");
   const [font, setFont] = useState("Kumbh Sans");
   const fontsArray = ["Kumbh Sans", "Roboto Slab", "Space Mono"];
+
+  useEffect(() => {
+    setNamedPause("pause pomodoro");
+  }, []);
 
   return (
     <TimerContext.Provider
@@ -131,6 +141,8 @@ function App() {
         longSecondsLeft,
         setLongSecondsLeft,
         longSecondRef,
+        namedPause,
+        setNamedPause,
       }}
     >
       <Timer />
